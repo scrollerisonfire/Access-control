@@ -1,0 +1,16 @@
+# ESP-IDF Partition Table
+# Name,   Type, SubType, Offset,  Size, Flags
+# Configuration data:       24576 bytes
+nvs,      data, nvs,     0x009000, 0x006000,          
+# WiFi system data:          4096 bytes
+phy_init, data, phy,     0x00F000, 0x001000,          
+# Logs and Runtime data:   380928 bytes
+nvs_log,  data, nvs,     0x010000, 0x05D000,          
+# OTA system data:           8192 bytes
+otadata,  data, ota,     0x06D000, 0x002000,          
+# Factory programmed image  1'245'184 bytes
+factory,  app,  factory, 0x070000, 0x130000,               
+# OTA image 0
+ota_0,    app,  ota_0,   0x1A0000, 0x130000,               
+# OTA image 1
+ota_1,    app,  ota_1,   0x2D0000, 0x130000,               

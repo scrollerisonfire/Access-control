@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SLIM QR configuration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<script>
+    // Get the current date and time
+    var currentTime = new Date();
+
+    // Format the date as YYYY-MM-DD
+    var year = currentTime.getFullYear();
+    var month = ('0' + (currentTime.getMonth() + 1)).slice(-2); // Adding 1 to month because January is 0
+    var day = ('0' + currentTime.getDate()).slice(-2);
+
+    var dateString = year + '-' + month + '-' + day;
+
+    // Format the time as HH:MM
+    var hours = ('0' + currentTime.getHours()).slice(-2);
+    var minutes = ('0' + currentTime.getMinutes()).slice(-2);
+
+    var timeString = hours + ':' + minutes;
+
+    // Combine date and time strings
+    var dateTimeString = dateString + ' ' + timeString;
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Function to fetch configuration and update the form
+        function loadConfig() {
+            fetch('config.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    fillForm(data);
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+
+        // Function to fill the form with data
+        function fillForm(data) {
+            // Fill the HTML field with the current time
+            document.getElementById("currentTime").value = dateTimeString;
+            // Loop through each property in the data object
+            for (let key in data) {
+                // Find the form element that matches the name of the key
+                let input = document.getElementById(key);
+                if (input) {
+                    // Check the type of the input to determine how to set the value
+                    if (input.type === 'checkbox') {
+                        input.checked = data[key];
+                    } else {
+                        input.value = data[key];
+                    }
+                }
+            }
+
+            // document.getElementById('dhcp').addEventListener('change', function () {
+            //     const ipAddressField = document.getElementById('ip_address');
+            //     const ipMask = document.getElementById('ip_mask');
+            //     const gateway = document.getElementById('gateway');
+            //     const primaryDNS = document.getElementById('primary_dns');
+            //     const secondaryDNS = document.getElementById('secondary_dns');
+
+            //     if (this.checked) {
+            //         ipAddressField.classList.add('hidden');
+            //         ipMask.classList.add('hidden');
+            //         gateway.classList.add('hidden');
+            //         primaryDNS.classList.add('hidden');
+            //         secondaryDNS.classList.add('hidden');
+            //     } else {
+            //         ipAddressField.classList.remove('hidden');
+            //         ipMask.classList.remove('hidden');
+            //         gateway.classList.remove('hidden');
+            //         primaryDNS.classList.remove('hidden');
+            //         secondaryDNS.classList.remove('hidden');
+            //     }
+            // });
+
+            // // Trigger change event on page load
+            // document.getElementById('dhcp').dispatchEvent(new Event('change'));
+        }
+
+        // Load the config on page load
+        loadConfig();
+    });
+</script>
+
+<body>
+    <h1>Access Control</h1>
+    <form action="/config" method="post" id="configForm">
+        <label for="currentTime">Current Time:</label><br>
+        <input type="text" id="currentTime" readonly><br>
+        <label for="name" type="text/css">Device name:</label><br>
+        <input type="text" id="name" name="name" class="large"><br>
+
+        <label for="room" type="text/css">Room number:</label><br>
+        <input type="text" id="room" name="room" class="large"><br>
+        <label for="hotel_code" type="text/css">Hotel code:</label><br>
+        <input type="text" id="hotel_code" name="hotel_code" class="large"><br>
+
+        <label for="ssid" type="text/css">WiFi ssid:</label><br>
+        <input type="text" id="ssid" name="ssid" class="large"><br>
+        <label for="password" type="text/css">WiFi password:</label><br>
+        <input type="password" id="pass" name="pass" class="large"><br>
+        <label for="apssid" type="text/css">AP ssid:</label><br>
+        <input type="text" id="apssid" name="apssid" class="large"><br>
+        <label for="appass" type="text/css">AP password:</label><br>
+        <input type="password" id="appass" name="appass" class="large"><br>
+        <label for="mqtt" type="text/css">MQTT server:</label><br>
+        <input type="text" id="mqtt" name="mqtt" class="large"><br>
+        <label for="mqtt_port" type="text/css">MQTT port:</label><br>
+        <input type="text" id="mqtt_port" name="mqtt_port" class="large"><br>
+        <label for="mqtt_user" type="text/css">MQTT username:</label><br>
+        <input type="text" id="mqtt_user" name="mqtt_user" class="large"><br>
+        <label for="mqtt_user_pass" type="text/css">MQTT password:</label><br>
+        <input type="password" id="mqtt_user_pass" name="mqtt_user_pass" class="large"><br>
+        <label for="type" type="text/css">Device type:</label><br>
+        <input type="text" id="type" name="type" class="large"><br>
+        <label for="dhcp" type="text/css">DHCP:</label><br>
+        <input checked type="checkbox" id="dhcp" name="dhcp" class="large"><br>
+        <label for="ip_address" type="text/css">IP address:</label><br>
+        <input type="text" id="ip_address" name="ip_address" class="large"><br>
+        <label for="ip_mask" type="text/css">Mask:</label><br>
+        <input type="text" id="ip_mask" name="ip_mask" class="large"><br>
+        <label for="gateway" type="text/css">Gateway:</label><br>
+        <input type="text" id="gateway" name="gateway" class="large"><br>
+        <label for="primary_dns" type="text/css">Primary DNS:</label><br>
+        <input type="text" id="primary_dns" name="primary_dns" class="large"><br>
+        <label for="secondary_dns" type="text/css">Secondary DNS:</label><br>
+        <input type="text" id="secondary_dns" name="secondary_dns" class="large"><br>
+        <br>
+        <input class="button button" type="submit" value="Submit and reboot">
+    </form>
+    <p></p>
+    <p><a href="/exit"><button class="button button2">EXIT</button></a></p>
+</body>
+
+</html>

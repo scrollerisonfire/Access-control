@@ -1,0 +1,94 @@
++ void setup();
+> void loop();
+    - restart if no WiFi for WIFI_WATCHER_TIME
+# void onMqttSubscribe();
+x void measureTime();
+# void onMqttMessage();
+# void connectBroker();
+# void responseAlive();
++ void open_relay();  :: openDoorForDuration()
++ void errorSound();    :: startErrorSound()
+x void goSleep();
+# void confirmOkReceiving();
+# void confirmNokReceiving();
+# void onMqttConnect();
+# void mac_subscriber();
+x void sendLateMessage();
++ void setSound();    :: startSound()
+> void opendoor();      :: openDoorForDuration()
+    - light LED
+    - start buzzer
+> void closedoor();     :: forceCloseDoor()
+    - light LED
+    - QR breathing
++ void readConfig();
+# void publishErrorCard();
+# void publishUserAcces();
++ boolean readCard();
+@ boolean checkAccess();
++ void soundLoop();
++ void relayLoop();       :: loopRelay()
++ void cardLoop();
+# void messageLoop();
+x void readFile();
+x String readUsers();
+x void deleteFile();
++ uint8_t print_wakeup_reason();
+> void startServer();
+    - include 3 files: html, css, json
+    - implement handlers
++ void loadConfiguration();
++ void saveConfiguration();
+- bool isTimeToSleep();
++ void factory_reset();
+- void restart();
+# void onMqttPublish();
+# void connectToMqtt();
+# void onMqttUnsubscribe();
+# void onMqttDisconnect();
++ void initSPI();
++ void initGPIO();
++ void connectWiFi();
++ void readBlock();
+@ void encrypt();
+@ void decrypt();
+@ bool groupAcces();
+@ uint64_t checkOfflineCardAccess();
+>@ void saveEvent();
+@ void sendLog();
+# void setRoomHotelGroup();
++ void setClock();
+>@ void deleteLog();
++ void activateAP();
+- void activateTimeUpdate();
+- void changeUpdateKey();
+x void restartSensor();
++ void initQR();
++ void lightDimmer();
++ void setGreenBreathing();
++ void setPurpleBreathing();
++ void setRedBreathing();
++ void setYellowBreathing();
++ void setBlueBreathing();
++ void qrLoop();
+# void initBroker();
+x void setTime();
+- bool compareTime();
+- void updateBrokerConfig();
+
+
+Status as of 2025.01.26
+=======================
++ 27
+>  4
+- 39
+x  7
+
+Status as of 2025.01.27
+=======================
+# 17 : MQTT related 
+@  8 : Logs and AccessControl
++ 27 : Done
+>  4 : Working
+- 13 : TODO
+x  8 : Irrelevant
